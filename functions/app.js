@@ -1,20 +1,18 @@
-// File: server.js
 import express from "express";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import cors from "cors";
+import serverless from "serverless-http";  // Thêm thư viện serverless-http
 
-const app = express(); // Khởi tạo app trước khi sử dụng
-const port = 5000;
+const app = express();
+const port = process.env.PORT || 5000; // Dùng biến môi trường PORT nếu có, nếu không thì mặc định là 5000
 
 // Cấu hình CORS cho phép tất cả các nguồn
 app.use(cors());
 
 // Kết nối MongoDB
 mongoose
-  .connect(
-    "mongodb+srv://trantuanhao123:Hao123456@cluster0.4tjhm.mongodb.net/test"
-  )
+  .connect(process.env.MONGO_URL)  // Sử dụng biến môi trường để kết nối MongoDB
   .then(() => console.log("Kết nối MongoDB thành công"))
   .catch((err) => console.error("Kết nối MongoDB thất bại:", err));
 
@@ -34,6 +32,10 @@ app.use(bodyParser.json());
 
 // API để lưu thông tin bệnh viện vào MongoDB
 app.post("/api/hospitals", (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*"); // Cho phép tất cả nguồn
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
   const newHospital = new Hospital(req.body);
 
   newHospital
@@ -42,7 +44,7 @@ app.post("/api/hospitals", (req, res) => {
       res.status(201).json(hospital);
     })
     .catch((error) => {
-      console.error("Error saving data:", error); // Log lỗi để kiểm tra chi tiết
+      console.error("Error saving data:", error);
       res.status(500).json({
         error: "Có lỗi xảy ra khi lưu dữ liệu",
         details: error.message,
@@ -50,6 +52,6 @@ app.post("/api/hospitals", (req, res) => {
     });
 });
 
-app.listen(port, () => {
-  console.log(`Server đang chạy tại http://localhost:${port}`);
-});
+
+// Expose ứng dụng Express qua serverless handler
+export const handler = serverless(app);

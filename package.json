@@ -2,15 +2,17 @@
   "name": "server",
   "version": "1.0.0",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "netlify deploy --prod",
-    "start": "node server.js"
+    "start": "node server.js",
+    "deploy": "netlify deploy"
   },
   "keywords": [],
-  "author": "",
+  "author": "Your Name",
   "license": "ISC",
-  "description": "",
+  "description": "A serverless Node.js project",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.21.2",
