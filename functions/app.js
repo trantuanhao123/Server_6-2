@@ -51,7 +51,5 @@ app.post("/api/hospitals", (req, res) => {
       });
     });
 });
-
-
 // Expose ứng dụng Express qua serverless handler
 export const handler = serverless(app);
