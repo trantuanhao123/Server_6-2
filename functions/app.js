@@ -51,5 +51,23 @@ app.post("/api/hospitals", (req, res) => {
       });
     });
 });
-// Expose ứng dụng Express qua serverless handler
+
+// API để lấy danh sách các bệnh viện từ MongoDB
+app.get("/api/hospitals", (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*"); // Cho phép tất cả nguồn
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+  Hospital.find()
+    .then((hospitals) => {
+      res.status(200).json(hospitals);
+    })
+    .catch((error) => {
+      console.error("Error fetching data:", error);
+      res.status(500).json({
+        error: "Có lỗi xảy ra khi lấy dữ liệu",
+        details: error.message,
+      });
+    });
+});
 export const handler = serverless(app);
