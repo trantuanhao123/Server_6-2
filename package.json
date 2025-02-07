@@ -6,19 +6,15 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "netlify deploy --prod",
-    "start": "node server.js",
-    "deploy": "netlify deploy"
+    "start": "node server.js"
   },
   "keywords": [],
-  "author": "Your Name",
+  "author": "Hao",
   "license": "ISC",
-  "description": "A serverless Node.js project",
+  "description": "A Node.js project",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.21.2",
-    "mongoose": "^8.9.5",
-    "netlify-cli": "^17.17.1",
-    "netlify-lambda": "^2.0.16",
-    "serverless-http": "^3.2.0"
+    "mongoose": "^8.9.5"
   }
 }
